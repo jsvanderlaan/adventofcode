@@ -999,49 +999,37 @@ const input = [
     'down 2',
     'down 9',
     'forward 9',
-];
+]
 
-const test = [
-  "forward 5",
-  "down 5",
-  "forward 8",
-  "up 3",
-  "down 8",
-  "forward 2",
-];
+const test = ['forward 5', 'down 5', 'forward 8', 'up 3', 'down 8', 'forward 2']
 
 const getInstructions = (arr) =>
-  arr.map((instr) => ({
-    command: instr.slice(0, 1),
-    amount: parseInt(instr.slice(-1)),
-  }));
+    arr.map((instr) => ({
+        command: instr.slice(0, 1),
+        amount: parseInt(instr.slice(-1)),
+    }))
 
 const getPos = (arr) =>
-  arr.reduce((prev, curr) => ({
-    hor: prev.hor + (curr.command === "f" ? curr.amount : 0),
-    dep:
-      prev.dep +
-      (curr.command === "d"
-        ? curr.amount
-        : curr.command === "u"
-        ? -1 * curr.amount
-        : 0),
-  }), {hor: 0, dep: 0});
+    arr.reduce(
+        (prev, curr) => ({
+            hor: prev.hor + (curr.command === 'f' ? curr.amount : 0),
+            dep: prev.dep + (curr.command === 'd' ? curr.amount : curr.command === 'u' ? -1 * curr.amount : 0),
+        }),
+        { hor: 0, dep: 0 }
+    )
 
-  const output = getPos(getInstructions(input));
-  console.log(output.hor * output.dep, output);
+const output = getPos(getInstructions(input))
+console.log(output.hor * output.dep, output)
 
-  const getPos2 = (arr) => 
-    arr.reduce((prev, curr) => ({
-        hor: prev.hor + (curr.command === "f" ? curr.amount : 0),
-        dep: prev.dep + (curr.command === "f" ? prev.aim * curr.amount : 0)        ,
-        aim: prev.aim +
-        (curr.command === "d"
-            ? curr.amount
-            : curr.command === "u"
-            ? -1 * curr.amount
-            : 0)
-    }), {hor: 0, dep: 0, aim: 0})
+const getPos2 = (arr) =>
+    arr.reduce(
+        (prev, curr) => ({
+            hor: prev.hor + (curr.command === 'f' ? curr.amount : 0),
+            dep: prev.dep + (curr.command === 'f' ? prev.aim * curr.amount : 0),
+            aim: prev.aim + (curr.command === 'd' ? curr.amount : curr.command === 'u' ? -1 * curr.amount : 0),
+        }),
+        { hor: 0, dep: 0, aim: 0 }
+    )
 
-    const output2 = getPos2(getInstructions(input));
-    console.log(output2.hor * output2.dep, output2);
+const output2 = getPos2(getInstructions(input))
+console.log(output2.hor * output2.dep, output2)
