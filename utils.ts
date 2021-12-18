@@ -18,5 +18,19 @@ export const customDistinct =
     (value: T, index: number, self: T[]) =>
         self.findIndex((x) => equals(value, x)) === index;
 export const copies = <T>(value: T, index: number, self: T[]) => self.indexOf(value) !== index;
+
+export const getArray = <T>(size: number, itemF: (i: number) => T) => [...Array(size)].map((_, i) => itemF(i));
+export const getEmptyArray = (size: number) => [...Array(size)].map((_) => null);
 export const getGrid = <T>(sizeX: number, sizeY: number, cellF: (x: number, y: number) => T) =>
-    [...Array(sizeY)].map((_, y) => [...Array(sizeX)].map((_, x) => cellF(x, y)));
+    getArray(sizeY, (y) => getArray(sizeX, (x) => cellF(x, y)));
+export const getEmptyGrid = (sizeX: number, sizeY: number) => getArray(sizeY, (_) => getEmptyArray(sizeX));
+
+export const convertArrayToObject = <K, S>(array: K[], keyF: (k: K) => string, valueF: (i: K) => S) => {
+    const initialValue = {} as { [x: string]: S };
+    return array.reduce((obj, item) => {
+        return {
+            ...obj,
+            [keyF(item)]: valueF(item),
+        };
+    }, initialValue);
+};
