@@ -29,6 +29,10 @@ func main() {
 			f = aoc2022.Day3
 		case "04":
 			f = aoc2022.Day4
+		case "05":
+			f = aoc2022.Day5
+		case "06":
+			f = aoc2022.Day6
 		}
 	}
 
