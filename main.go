@@ -35,6 +35,8 @@ func main() {
 			f = aoc2022.Day6
 		case "07":
 			f = aoc2022.Day7
+		case "08":
+			f = aoc2022.Day8
 		}
 	}
 
