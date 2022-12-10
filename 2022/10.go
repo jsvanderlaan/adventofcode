@@ -51,7 +51,6 @@ func Day10(data string) {
 		} else {
 			sprite += "."
 		}
-		// fmt.Println("cycle", cycle, "sprite", sprite, "x", x)
 
 		if row == "noop" {
 			continue
@@ -63,12 +62,10 @@ func Day10(data string) {
 		} else {
 			sprite += "."
 		}
-		// fmt.Println("cycle", cycle, "sprite", sprite, "x", x)
 
 		_, v, _ := strings.Cut(row, " ")
 		val, _ := strconv.Atoi(v)
 		x += val
-		// fmt.Println("cycle", cycle, "sprite", sprite, "x", x)
 	}
 
 	fmt.Println("Answer 2:")
