@@ -39,4 +39,43 @@ func Day10(data string) {
 	}
 
 	fmt.Println("Answer 1:", sum)
+
+	cycle = 0
+	x = 1
+	sprite := ""
+
+	for _, row := range rows {
+		cycle++
+		if cycle%40 >= x && cycle%40 <= x+2 {
+			sprite += "#"
+		} else {
+			sprite += "."
+		}
+		// fmt.Println("cycle", cycle, "sprite", sprite, "x", x)
+
+		if row == "noop" {
+			continue
+		}
+
+		cycle++
+		if cycle%40 >= x && cycle%40 <= x+2 {
+			sprite += "#"
+		} else {
+			sprite += "."
+		}
+		// fmt.Println("cycle", cycle, "sprite", sprite, "x", x)
+
+		_, v, _ := strings.Cut(row, " ")
+		val, _ := strconv.Atoi(v)
+		x += val
+		// fmt.Println("cycle", cycle, "sprite", sprite, "x", x)
+	}
+
+	fmt.Println("Answer 2:")
+	for i, s := range sprite {
+		fmt.Print(string(s))
+		if i%40 == 39 {
+			fmt.Print(string('\n'))
+		}
+	}
 }
