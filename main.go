@@ -37,6 +37,11 @@ func main() {
 			f = aoc2022.Day7
 		case "08":
 			f = aoc2022.Day8
+		case "09":
+			// f = aoc2022.Day8
+			panic("09 not ready")
+		case "10":
+			f = aoc2022.Day10
 		}
 	}
 
