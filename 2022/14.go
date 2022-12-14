@@ -9,6 +9,7 @@ import (
 
 func Day14(data string) {
 	columns := map[int]map[int]byte{}
+	max_y := 0
 
 	rockSnakes := strings.Split(data, "\r\n")
 	for _, rockSnake := range rockSnakes {
@@ -21,6 +22,13 @@ func Day14(data string) {
 			c_y, _ := strconv.Atoi(sc_y)
 			n_x, _ := strconv.Atoi(sn_x)
 			n_y, _ := strconv.Atoi(sn_y)
+
+			if c_y > max_y {
+				max_y = c_y
+			}
+			if n_y > max_y {
+				max_y = n_y
+			}
 
 			if c_x == n_x {
 				var r []int
@@ -54,6 +62,8 @@ func Day14(data string) {
 		}
 	}
 
+	floor := max_y + 2
+
 	sand_counter := 0
 	stop := false
 	for !stop {
@@ -66,23 +76,24 @@ func Day14(data string) {
 			_, col_has_stop := columns[curr_x]
 			if !col_has_stop {
 				// fmt.Println("\tSTOP: no stops in column", curr_x)
-				stop = true
-				break
+				columns[curr_x] = map[int]byte{}
 			}
-			stop_point := getStopPointOfColumn(columns[curr_x], curr_y)
+			stop_point := getStopPointOfColumn(columns[curr_x], curr_y, floor)
 			// fmt.Println("\tstop_point", stop_point)
 
-			if stop_point == -2 {
-				// fmt.Println("\tSTOP: no stop point for curr_x", curr_x, "curr_y", curr_y)
-				stop = true
-				break
+			if stop_point == floor-1 {
+				// stop the sand!
+				// fmt.Println("\tplace sand at x", curr_x, "y", stop_point)
+				columns[curr_x][stop_point] = 1
+				// fmt.Println(columns)
+				can_move = false
+				continue
 			}
 
 			// check if can go left
 			_, next_left_has_stop := columns[curr_x-1]
 			if !next_left_has_stop {
-				stop = true
-				break
+				columns[curr_x-1] = map[int]byte{}
 			}
 			_, next_left_occupied := columns[curr_x-1][stop_point+1]
 			if !next_left_occupied {
@@ -95,8 +106,7 @@ func Day14(data string) {
 			// check if can go right
 			_, next_right_has_stop := columns[curr_x+1]
 			if !next_right_has_stop {
-				stop = true
-				break
+				columns[curr_x+1] = map[int]byte{}
 			}
 			_, next_right_occupied := columns[curr_x+1][stop_point+1]
 			if !next_right_occupied {
@@ -106,18 +116,25 @@ func Day14(data string) {
 				continue
 			}
 
+			if stop_point == 0 {
+				// fmt.Println("\tSTOP: stopped at origin. We are done.")
+				stop = true
+				break
+			}
+
 			// stop the sand!
 			// fmt.Println("\tplace sand at x", curr_x, "y", stop_point)
 			columns[curr_x][stop_point] = 1
+			// fmt.Println(columns)
 			can_move = false
 		}
 	}
 
 	// fmt.Println(columns)
-	fmt.Println("Answer 1:", sand_counter-1)
+	fmt.Println("Answer 2:", sand_counter)
 }
 
-func getStopPointOfColumn(m map[int]byte, start int) int {
+func getStopPointOfColumn(m map[int]byte, start int, max int) int {
 	min := math.MaxInt32
 	set := false
 	for k := range m {
@@ -127,7 +144,7 @@ func getStopPointOfColumn(m map[int]byte, start int) int {
 		}
 	}
 	if !set {
-		return -2
+		return max - 1
 	}
 	return min - 1
 }
