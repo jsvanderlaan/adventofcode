@@ -5,6 +5,7 @@ import (
 	"aoc/utils"
 	"fmt"
 	"os"
+	"time"
 )
 
 func main() {
@@ -50,7 +51,9 @@ func main() {
 		}
 	}
 
+	start := time.Now()
 	f(data)
+	fmt.Printf("Execution time: %v", time.Since(start))
 }
 
 func readData(year string, day string, test string) string {
