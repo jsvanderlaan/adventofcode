@@ -82,6 +82,39 @@ func Day15(data string) {
 
 	fmt.Println("Answer 1:", count-len(beaconsOnY), count, len(beaconsOnY))
 
+	const max int = 4000000
+
+	found := false
+	var p point
+
+	for y := 0; y <= max; y++ {
+		if found {
+			break
+		}
+		for x := 0; x <= max; x++ {
+
+			maxDistCovertX := -1
+			for _, s := range sensors {
+				if manDist(x, y, s.pos.x, s.pos.y) <= s.radius {
+					distY := abs(y - s.pos.y)
+					distCovertX := s.pos.x + abs(s.radius-distY)
+					if distCovertX > maxDistCovertX {
+						maxDistCovertX = distCovertX
+					}
+				}
+			}
+			if maxDistCovertX == -1 {
+				found = true
+				p = point{x, y}
+				break
+			}
+			x = maxDistCovertX
+		}
+
+	}
+
+	fmt.Println("Answer 2:", p.x*4000000+p.y)
+
 	// for _, s := range sensors {
 
 	// 	fmt.Println(s)
@@ -94,4 +127,8 @@ func Day15(data string) {
 
 func manDist(x_1 int, y_1 int, x_2 int, y_2 int) int {
 	return int(math.Abs(float64(x_1-x_2))) + int(math.Abs(float64(y_1-y_2)))
+}
+
+func abs(x int) int {
+	return int(math.Abs(float64(x)))
 }
