@@ -14,14 +14,17 @@ type file struct {
 }
 
 func Day20(data string) {
+	const decryption_key = 811589153
+	const number_of_mixes = 10
+
 	initialFiles := []*file{}
 	var zero_file *file
 	var first_file *file
 	var last_file *file
-	// fileMap := map[int]*file{}
+
 	for i, f := range strings.Split(data, "\r\n") {
 		file_value, _ := strconv.Atoi(f)
-		new := file{file_value, nil, nil}
+		new := file{file_value * decryption_key, nil, nil}
 		initialFiles = append(initialFiles, &new)
 
 		if file_value == 0 {
@@ -42,55 +45,45 @@ func Day20(data string) {
 		last_file = &new
 	}
 
-	// let file wrap
-
+	// let files wrap
 	first_file.left = last_file
 	last_file.right = first_file
 
-	for _, f := range initialFiles {
-		// fmt.Println("Before moving", f)
-		// printFiles(fileMap)
+	for j := 0; j < number_of_mixes; j++ {
+		for _, f := range initialFiles {
 
-		if f.value == 0 {
-			continue
-		}
-
-		// cut file out
-		f.left.right = f.right
-		f.right.left = f.left
-
-		// fmt.Println("After cutting out", f, f.left, f.right)
-		// printFiles(fileMap)
-
-		number_of_steps := int(math.Abs(float64(f.value)))
-		next_pos := f
-		// fmt.Println("next_pos", next_pos)
-		go_left := f.value < 0
-		for i := 0; i < number_of_steps; i++ {
-			if go_left {
-				next_pos = next_pos.left
-			} else {
-				next_pos = next_pos.right
+			if f.value == 0 {
+				continue
 			}
-			// if next_pos.value == 698 {
-			// 	fmt.Println("next_pos", next_pos, next_pos.right)
-			// }
-		}
 
-		if go_left { // next_pos is new right of file
-			f.right = next_pos
-			f.left = next_pos.left
-			next_pos.left.right = f
-			next_pos.left = f
-		} else { // next_pos is new left oof file
-			f.left = next_pos
-			f.right = next_pos.right
-			next_pos.right.left = f
-			next_pos.right = f
-		}
+			// cut file out
+			f.left.right = f.right
+			f.right.left = f.left
 
-		// fmt.Println("After pasting", f, "where next_pos was", next_pos, "pasted file is", f)
-		// printFiles(fileMap)
+			number_of_steps := int(math.Abs(float64(f.value))) % (len(initialFiles) - 1)
+			next_pos := f
+
+			go_left := f.value < 0
+			for i := 0; i < number_of_steps; i++ {
+				if go_left {
+					next_pos = next_pos.left
+				} else {
+					next_pos = next_pos.right
+				}
+			}
+
+			if go_left { // next_pos is new right of file
+				f.right = next_pos
+				f.left = next_pos.left
+				next_pos.left.right = f
+				next_pos.left = f
+			} else { // next_pos is new left oof file
+				f.left = next_pos
+				f.right = next_pos.right
+				next_pos.right.left = f
+				next_pos.right = f
+			}
+		}
 	}
 
 	sum := 0
