@@ -46,6 +46,8 @@ func main() {
 			f = aoc2022.Day11
 		case "12":
 			f = aoc2022.Day12
+		// case "13":
+		// 	f = aoc2022.Day13
 		case "14":
 			f = aoc2022.Day14
 		case "15":
@@ -58,6 +60,14 @@ func main() {
 			f = aoc2022.Day19
 		case "20":
 			f = aoc2022.Day20
+		case "21":
+			f = aoc2022.Day21
+		// case "22":
+		// 	f = aoc2022.Day22
+		// case "23":
+		// 	f = aoc2022.Day23
+		// case "24":
+		// 	f = aoc2022.Day24
 		case "25":
 			f = aoc2022.Day25
 		}
