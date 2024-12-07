@@ -78,6 +78,8 @@ func main() {
 		switch day {
 		case "01":
 			f = aoc2024.Day1
+		case "02":
+			f = aoc2024.Day2
 		}
 	}
 
