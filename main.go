@@ -2,6 +2,7 @@ package main
 
 import (
 	aoc2022 "aoc/2022"
+	aoc2024 "aoc/2024"
 	"aoc/utils"
 	"fmt"
 	"os"
@@ -17,6 +18,8 @@ func main() {
 		test = args[2]
 	}
 	data := readData(year, day, test)
+
+	fmt.Printf("year %v day %v test %v\n", year, day, test == "t")
 
 	var f func(string)
 	switch year {
@@ -70,6 +73,11 @@ func main() {
 		// 	f = aoc2022.Day24
 		case "25":
 			f = aoc2022.Day25
+		}
+	case "2024":
+		switch day {
+		case "01":
+			f = aoc2024.Day1
 		}
 	}
 

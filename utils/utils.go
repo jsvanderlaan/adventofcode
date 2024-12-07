@@ -28,3 +28,7 @@ func Max(arr []int) int {
 	}
 	return max
 }
+
+func Abs(x int) int {
+	return int(math.Abs(float64(x)))
+}
