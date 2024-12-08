@@ -19,7 +19,7 @@ func main() {
 	}
 	data := readData(year, day, test)
 
-	fmt.Printf("year %v day %v test %v\n", year, day, test == "t")
+	fmt.Printf("year %v day %v %v\n", year, day, test)
 
 	var f func(string)
 	switch year {
@@ -86,6 +86,8 @@ func main() {
 			f = aoc2024.Day4
 		case "05":
 			f = aoc2024.Day5
+		case "06":
+			f = aoc2024.Day6
 		}
 	}
 
