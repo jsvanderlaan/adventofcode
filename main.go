@@ -84,6 +84,8 @@ func main() {
 			f = aoc2024.Day3
 		case "04":
 			f = aoc2024.Day4
+		case "05":
+			f = aoc2024.Day5
 		}
 	}
 
