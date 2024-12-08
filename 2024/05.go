@@ -33,6 +33,7 @@ func Day5(data string) {
 	}
 
 	correctIndeces := []int{}
+	sum2 := 0
 	for index, update := range updates {
 		c := make([]int, len(update))
 		copy(c, update)
@@ -46,12 +47,14 @@ func Day5(data string) {
 			}
 			return 0
 		})
-		// fmt.Println(c)
-		// fmt.Println(update)
+		// fmt.Printf("c %v\n", c)
+		// fmt.Printf("update %v\n", update)
 		correct := true
 		for i, page := range update {
 			if c[i] != page {
 				correct = false
+				sum2 += c[len(c)/2]
+				break
 			}
 		}
 		if correct {
@@ -64,5 +67,5 @@ func Day5(data string) {
 		sum += updates[index][len(updates[index])/2]
 	}
 
-	fmt.Println(sum)
+	fmt.Println(sum2)
 }
